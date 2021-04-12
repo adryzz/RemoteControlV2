@@ -13,11 +13,11 @@ namespace RemoteControlV2.Logging
 
         public LogSeverity ConsoleVerbosity = LogSeverity.Info;
 
-        private Thread logThread;//the thread looping and saving logs from the queue
+        private Thread logThread; //the thread looping and saving logs from the queue
 
         private ConcurrentQueue<LogMessage> logQueue;//the thread-safe queue
 
-        private  bool logging = true;//set to false to stop logging
+        private  bool logging = true; //set to false to stop logging
 
         public  bool IsLogging => logThread.ThreadState == ThreadState.Running;
 
@@ -30,7 +30,6 @@ namespace RemoteControlV2.Logging
 
         private Logger()
         {
-
         }
 
         public static  Logger AllocateLogger()
@@ -104,7 +103,7 @@ namespace RemoteControlV2.Logging
                     LogMessage message;
                     if (!logQueue.TryDequeue(out message))
                     {
-                        Thread.Sleep(50);//if queue is busy, wait 50ms
+                        Thread.Sleep(50); //if queue is busy, wait 50ms
                     }
                     ConsoleLog(message);
                     DiskLog(message);
@@ -115,7 +114,7 @@ namespace RemoteControlV2.Logging
 
         private  void ConsoleLog(LogMessage message)
         {
-            if ((int)ConsoleVerbosity <= (int)message.Severity)//log to console only if verbosity is lower or equal
+            if ((int)ConsoleVerbosity <= (int)message.Severity) //log to console only if verbosity is lower or equal
             {
                 Console.Write("[");
                 Console.ForegroundColor = GetColor(message.Severity);
