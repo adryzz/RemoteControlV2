@@ -15,7 +15,7 @@ namespace RemoteControlV2.Commands
 
         public void Execute(string arguments)
         {
-            throw new NotImplementedException();
+            int perc = int.Parse(arguments);
         }
     }
 }
