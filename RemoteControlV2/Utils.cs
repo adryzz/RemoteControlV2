@@ -45,9 +45,9 @@ namespace RemoteControlV2
 
         public static bool IsPluginType(Type type)
         {
-            return (!type.IsAbstract) && (!type.IsInterface) &&
-                typeof(IPlugin).IsAssignableFrom(type) ||
-                    type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IPlugin));
+            return ((!type.IsAbstract) && (!type.IsInterface)) &&
+                (typeof(IPlugin).IsAssignableFrom(type) ||
+                    type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IPlugin)));
         }
     }
 }
