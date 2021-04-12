@@ -15,7 +15,7 @@ namespace RemoteControlV2.Logging
 
         private Thread logThread; //the thread looping and saving logs from the queue
 
-        private ConcurrentQueue<LogMessage> logQueue;//the thread-safe queue
+        private ConcurrentQueue<LogMessage> logQueue; //the thread-safe queue
 
         private  bool logging = true; //set to false to stop logging
 
@@ -26,7 +26,6 @@ namespace RemoteControlV2.Logging
         private  StreamWriter networkLog;
 
         private  StreamWriter commandsLog;
-
 
         private Logger()
         {
@@ -40,7 +39,6 @@ namespace RemoteControlV2.Logging
             }
             return _Instance;
         }
-
 
         public void Initialize()
         {
@@ -74,6 +72,7 @@ namespace RemoteControlV2.Logging
         {
             logQueue.Enqueue(message);
         }
+
         public void Dispose()
         {
             logging = false;
