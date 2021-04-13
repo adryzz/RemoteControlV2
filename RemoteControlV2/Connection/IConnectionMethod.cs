@@ -10,7 +10,7 @@ namespace RemoteControlV2.Connection
     {
         void Initialize();
 
-        event EventHandler OnCommandReceived;
+        event EventHandler<CommandEventArgs> OnCommandReceived;
 
         void SendText(string text);
     }

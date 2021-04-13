@@ -5,6 +5,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RemoteControlV2.Connection;
 using RemoteControlV2.Logging;
 using RemoteControlV2.Plugins;
 using RemoteControlV2.Properties;
@@ -27,6 +28,8 @@ namespace RemoteControlV2
 
         //***** COMMANDS *****//
         public static List<ICommand> Commands { get; private set; } = new List<ICommand>();
+
+        public static IConnectionMethod Connection;
 
         /// <summary>
         /// The main entry point for the application.
@@ -69,12 +72,16 @@ namespace RemoteControlV2
                 }
             }
 
+            Connection = new SerialConnectionMethod(Config.Port, Config.BaudRate);
+
             Manager.Plugins = EnumeratePlugins();
             Manager.LoadAllPlugins();
             InitializePlugins();
             Logger.Log(LogType.Runtime, LogSeverity.Info, "Plugins loaded and initialized.");
-            Logger.Log(LogType.Runtime, LogSeverity.Debug, "Adding notification tray icon...");
 
+            Connection.Initialize();
+            Connection.OnCommandReceived += Connection_OnCommandReceived;
+            Logger.Log(LogType.Runtime, LogSeverity.Debug, "Adding notification tray icon...");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Icon = new NotifyIcon();
@@ -91,6 +98,11 @@ namespace RemoteControlV2
             Logger.Log(LogType.Runtime, LogSeverity.Debug, "Notification tray icon added.");
             Logger.Log(LogType.Runtime, LogSeverity.Debug, "Starting message loop.");
             Application.Run();
+        }
+
+        private static void Connection_OnCommandReceived(object sender, EventArgs e)
+        {
+            
         }
 
         private static void MainItem_Click(object sender, EventArgs e)

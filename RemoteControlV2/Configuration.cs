@@ -6,7 +6,9 @@ namespace RemoteControlV2
 {
     public class Configuration
     {
-        public int Port = 69420;
+        public string Port = "";
+        public int BaudRate = 115200;
+        public int NetPort = 69420;
         public bool ShowIcon = true;
         public bool ForceCommandsOnNewThread = false;
         public bool RestartOnUnhandledException = false;
