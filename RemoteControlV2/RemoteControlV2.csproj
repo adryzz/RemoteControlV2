@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandParser.cs" />
     <Compile Include="Commands\MuteCommand.cs" />
     <Compile Include="Commands\VolumeCommand.cs" />
     <Compile Include="Utils.cs" />

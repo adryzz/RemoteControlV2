@@ -15,7 +15,11 @@ namespace RemoteControlV2.Commands
 
         public void Execute(string arguments)
         {
-            int perc = int.Parse(arguments);
+            var value = CommandParser.Int32Parser(arguments);
+            if (!value.HasValue)
+            {
+                throw new ArgumentException();
+            }
         }
     }
 }

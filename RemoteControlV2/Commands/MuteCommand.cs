@@ -15,21 +15,12 @@ namespace RemoteControlV2.Commands
 
         public void Execute(string arguments)
         {
-            switch(arguments)
+            var state = CommandParser.BooleanParser(arguments);
+            if (!state.HasValue)
             {
-                case "0":
-                case "off":
-                case "false":
-                    {
-                        break;
-                    }
-                case "1":
-                case "on":
-                case "true":
-                    {
-                        break;
-                    }
+                throw new ArgumentException();
             }
+
         }
     }
 }
