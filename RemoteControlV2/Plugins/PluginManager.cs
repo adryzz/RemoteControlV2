@@ -57,6 +57,7 @@ namespace RemoteControlV2.Plugins
 
         public void OnCommand(ICommand command, string arguments)
         {
+            Program.Logger.Log(LogType.Runtime, LogSeverity.Trace, "OnCommand");
             if (Program.Config.ForceCommandsOnNewThread)
             {
                 if (command.Enabled)

@@ -5,7 +5,7 @@ using System.IO;
 
 namespace RemoteControlV2.Logging
 {
-    public  class Logger : IDisposable
+    public class Logger : IDisposable
     {
         static Logger _Instance;
 
@@ -17,21 +17,21 @@ namespace RemoteControlV2.Logging
 
         private ConcurrentQueue<LogMessage> logQueue; //the thread-safe queue
 
-        private  bool logging = true; //set to false to stop logging
+        private bool logging = true; //set to false to stop logging
 
-        public  bool IsLogging => logThread.ThreadState == ThreadState.Running;
+        public bool IsLogging => logThread.ThreadState == ThreadState.Running;
 
-        private  StreamWriter runtimeLog;
+        private StreamWriter runtimeLog;
 
-        private  StreamWriter networkLog;
+        private StreamWriter networkLog;
 
-        private  StreamWriter commandsLog;
+        private StreamWriter commandsLog;
 
         private Logger()
         {
         }
 
-        public static  Logger AllocateLogger()
+        public static Logger AllocateLogger()
         {
             if (_Instance == null || _Instance.Disposed)
             {
@@ -56,7 +56,7 @@ namespace RemoteControlV2.Logging
             logThread.Start();
         }
 
-        public  void Log(LogType type, LogSeverity severity, string message)
+        public void Log(LogType type, LogSeverity severity, string message)
         {
             LogMessage m = new LogMessage()
             {
@@ -68,7 +68,7 @@ namespace RemoteControlV2.Logging
             logQueue.Enqueue(m);
         }
 
-        public  void Log(LogMessage message)
+        public void Log(LogMessage message)
         {
             logQueue.Enqueue(message);
         }
@@ -85,14 +85,14 @@ namespace RemoteControlV2.Logging
             Disposed = true;
         }
 
-        public  void Flush()
+        public void Flush()
         {
             runtimeLog.Flush();
             networkLog.Flush();
             commandsLog.Flush();
         }
 
-        private  void LogLoop()
+        private void LogLoop()
         {
             while (logging)
             {
@@ -103,6 +103,7 @@ namespace RemoteControlV2.Logging
                     if (!logQueue.TryDequeue(out message))
                     {
                         Thread.Sleep(50); //if queue is busy, wait 50ms
+                        continue;
                     }
                     ConsoleLog(message);
                     DiskLog(message);
@@ -111,7 +112,7 @@ namespace RemoteControlV2.Logging
             }
         }
 
-        private  void ConsoleLog(LogMessage message)
+        private void ConsoleLog(LogMessage message)
         {
             if ((int)ConsoleVerbosity <= (int)message.Severity) //log to console only if verbosity is lower or equal
             {
@@ -127,7 +128,7 @@ namespace RemoteControlV2.Logging
             }
         }
 
-        private  void DiskLog(LogMessage message)
+        private void DiskLog(LogMessage message)
         {
             string log = $"[{message.Severity.ToString().ToUpper()}] | {message.LogTime} | {message.Message.Replace("\n", "").Replace("\r", "")}\n";
             switch (message.Type)
