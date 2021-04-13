@@ -5,6 +5,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RemoteControlV2.Commands;
 using RemoteControlV2.Connection;
 using RemoteControlV2.Logging;
 using RemoteControlV2.Plugins;
@@ -71,7 +72,7 @@ namespace RemoteControlV2
                     Exit(-1);
                 }
             }
-
+            AddStandardCommands();
             Connection = new SerialConnectionMethod(Config.Port, Config.BaudRate);
 
             Manager.Plugins = EnumeratePlugins();
@@ -98,6 +99,12 @@ namespace RemoteControlV2
             Logger.Log(LogType.Runtime, LogSeverity.Debug, "Notification tray icon added.");
             Logger.Log(LogType.Runtime, LogSeverity.Debug, "Starting message loop.");
             Application.Run();
+        }
+
+        private static void AddStandardCommands()
+        {
+            Commands.Add(new VolumeCommand());
+            Commands.Add(new MuteCommand());
         }
 
         private static void Connection_OnCommandReceived(object sender, CommandEventArgs e)
