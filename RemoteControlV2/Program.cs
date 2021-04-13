@@ -100,9 +100,16 @@ namespace RemoteControlV2
             Application.Run();
         }
 
-        private static void Connection_OnCommandReceived(object sender, EventArgs e)
+        private static void Connection_OnCommandReceived(object sender, CommandEventArgs e)
         {
-            
+            string name = e.Command.Remove(e.Command.IndexOf(' '));
+            foreach(ICommand c in Commands)
+            {
+                if (c.Name.Equals(name))
+                {
+                    Manager.OnCommand(c, e.Command.Substring(e.Command.IndexOf(' ')));
+                }
+            }
         }
 
         private static void MainItem_Click(object sender, EventArgs e)

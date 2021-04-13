@@ -20,7 +20,7 @@ namespace RemoteControlV2.Commands
             {
                 throw new ArgumentException();
             }
-
+            Program.Connection.SendText("Mute set to " + state.ToString());
         }
     }
 }
