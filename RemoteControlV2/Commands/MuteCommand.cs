@@ -20,6 +20,7 @@ namespace RemoteControlV2.Commands
             {
                 throw new ArgumentException();
             }
+            Program.Logger.Log(Logging.LogType.Commands, Logging.LogSeverity.Info, "Mute set to " + state.ToString());
             Program.Connection.SendText("Mute set to " + state.ToString());
         }
     }

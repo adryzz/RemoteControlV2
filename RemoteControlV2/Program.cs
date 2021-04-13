@@ -102,13 +102,21 @@ namespace RemoteControlV2
 
         private static void Connection_OnCommandReceived(object sender, CommandEventArgs e)
         {
-            string name = e.Command.Remove(e.Command.IndexOf(' '));
-            foreach(ICommand c in Commands)
+            Logger.Log(LogType.Commands, LogSeverity.Debug, e.Command);
+            try
             {
-                if (c.Name.Equals(name))
+                string name = e.Command.Remove(e.Command.IndexOf(' ')).Replace(" ", "");
+                foreach (ICommand c in Commands)
                 {
-                    Manager.OnCommand(c, e.Command.Substring(e.Command.IndexOf(' ')));
+                    if (c.Name.Equals(name))
+                    {
+                        Manager.OnCommand(c, e.Command.Substring(e.Command.IndexOf(' ')));
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                Logger.Log(LogType.Commands, LogSeverity.Error, ex.Message);
             }
         }
 
