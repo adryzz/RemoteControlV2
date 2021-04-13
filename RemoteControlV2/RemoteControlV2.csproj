@@ -52,6 +52,8 @@
     <Compile Include="CommandParser.cs" />
     <Compile Include="Commands\MuteCommand.cs" />
     <Compile Include="Commands\VolumeCommand.cs" />
+    <Compile Include="Connection\SerialConnectionMethod.cs" />
+    <Compile Include="Connection\IConnectionMethod.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Logging\Logger.cs" />
