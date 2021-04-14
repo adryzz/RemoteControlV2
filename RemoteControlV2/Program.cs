@@ -107,9 +107,11 @@ namespace RemoteControlV2
             Commands.Add(new CommandsListCommand());
             Commands.Add(new SetCommand());
             Commands.Add(new ReloadCommand());
+            Commands.Add(new ExitCommand());
             Commands.Add(new LogReadCommand());
             Commands.Add(new VolumeCommand());
             Commands.Add(new MuteCommand());
+            Commands.Add(new TTSCommand());
         }
 
         private static void Connection_OnCommandReceived(object sender, CommandEventArgs e)
