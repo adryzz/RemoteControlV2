@@ -15,8 +15,6 @@ namespace RemoteControlV2.Commands
 
         public void Execute(string arguments)
         {
-            Program.Logger.Log(Logging.LogType.Commands, Logging.LogSeverity.Info, "Command received!");
-            Program.Connection.SendLine("Command Received!");
             var state = CommandParser.BooleanParser(arguments);
             if (!state.HasValue)
             {

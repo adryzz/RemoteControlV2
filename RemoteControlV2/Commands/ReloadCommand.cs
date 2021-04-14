@@ -7,19 +7,16 @@ using System.Threading.Tasks;
 
 namespace RemoteControlV2.Commands
 {
-    class VolumeCommand : ICommand
+    class ReloadCommand : ICommand
     {
-        public string Name => "volume";
+        public string Name => "reload";
 
         public bool Enabled { get; set; } = true;
 
         public void Execute(string arguments)
         {
-            var value = CommandParser.Int32Parser(arguments);
-            if (!value.HasValue)
-            {
-                throw new ArgumentException();
-            }
+            Program.Logger.Log(Logging.LogType.Commands, Logging.LogSeverity.Info, "Reloading all settings...");
+            Program.Connection.SendLine("Reloading all settings...");
         }
     }
 }
