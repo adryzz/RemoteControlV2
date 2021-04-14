@@ -12,6 +12,8 @@ namespace RemoteControlV2.Commands
     {
         public string Name => "logread";
 
+        public string Syntax => "Usage: logread <verbosity level>";
+
         public bool Enabled { get; set; } = true;
 
         public void Execute(string arguments)

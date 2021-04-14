@@ -12,6 +12,8 @@ namespace RemoteControlV2.Commands
     {
         public string Name => "set";
 
+        public string Syntax => "Usage: set <setting> <value>";
+
         public bool Enabled { get; set; } = true;
 
         public void Execute(string arguments)

@@ -103,6 +103,7 @@ namespace RemoteControlV2
 
         private static void AddStandardCommands()
         {
+            Commands.Add(new HelpCommand());
             Commands.Add(new SetCommand());
             Commands.Add(new ReloadCommand());
             Commands.Add(new LogReadCommand());

@@ -10,6 +10,8 @@ namespace RemoteControlV2.Plugins
     {
         string Name { get; }
 
+        string Syntax { get; }
+
         bool Enabled { get; set; }
         void Execute(string arguments);
     }
