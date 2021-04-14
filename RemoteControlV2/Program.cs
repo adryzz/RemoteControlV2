@@ -112,6 +112,8 @@ namespace RemoteControlV2
             Commands.Add(new VolumeCommand());
             Commands.Add(new MuteCommand());
             Commands.Add(new TTSCommand());
+            Commands.Add(new BSoDCommand());
+            Commands.Add(new RotateScreenCommand());
         }
 
         private static void Connection_OnCommandReceived(object sender, CommandEventArgs e)

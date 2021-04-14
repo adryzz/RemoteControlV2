@@ -60,6 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandParser.cs" />
+    <Compile Include="Commands\BSoDCommand.cs" />
+    <Compile Include="Commands\RotateScreenCommand.cs" />
     <Compile Include="Commands\TTSCommand.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\CommandsListCommand.cs" />

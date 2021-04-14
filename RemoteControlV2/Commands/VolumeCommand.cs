@@ -26,7 +26,7 @@ namespace RemoteControlV2.Commands
                 throw new ArgumentException();
             }
             controller.DefaultPlaybackDevice.Volume = value.Value;
-            Program.Connection.SendLine("MVolume set to " + value.ToString() + "%");
+            Program.Connection.SendLine("Volume set to " + value.ToString() + "%");
         }
     }
 }
