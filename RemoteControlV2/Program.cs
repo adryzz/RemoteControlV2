@@ -101,6 +101,9 @@ namespace RemoteControlV2
             Application.Run();
         }
 
+        /// <summary>
+        /// Registers all standard commands
+        /// </summary>
         private static void AddStandardCommands()
         {
             Commands.Add(new HelpCommand());
@@ -119,6 +122,11 @@ namespace RemoteControlV2
             Commands.Add(new VersionCommand());
         }
 
+        /// <summary>
+        /// When data is received on the connection method
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private static void Connection_OnCommandReceived(object sender, CommandEventArgs e)
         {
             Logger.Log(LogType.Commands, LogSeverity.Debug, e.Command);
