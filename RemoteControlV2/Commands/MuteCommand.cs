@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AudioSwitcher.AudioApi.CoreAudio;
 
 namespace RemoteControlV2.Commands
 {
@@ -15,6 +16,8 @@ namespace RemoteControlV2.Commands
 
         public bool Enabled { get; set; } = true;
 
+        CoreAudioController controller = new CoreAudioController();
+
         public void Execute(string arguments)
         {
             var state = CommandParser.BooleanParser(arguments);
@@ -22,7 +25,7 @@ namespace RemoteControlV2.Commands
             {
                 throw new ArgumentException();
             }
-            Program.Logger.Log(Logging.LogType.Commands, Logging.LogSeverity.Info, "Mute set to " + state.ToString());
+            controller.DefaultPlaybackDevice.Mute(state.Value);
             Program.Connection.SendLine("Mute set to " + state.ToString());
         }
     }

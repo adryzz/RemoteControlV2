@@ -1,4 +1,5 @@
-﻿using RemoteControlV2.Plugins;
+﻿using AudioSwitcher.AudioApi.CoreAudio;
+using RemoteControlV2.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace RemoteControlV2.Commands
 
         public bool Enabled { get; set; } = true;
 
+        CoreAudioController controller = new CoreAudioController();
+
         public void Execute(string arguments)
         {
             var value = CommandParser.Int32Parser(arguments);
@@ -22,6 +25,8 @@ namespace RemoteControlV2.Commands
             {
                 throw new ArgumentException();
             }
+            controller.DefaultPlaybackDevice.Volume = value.Value;
+            Program.Connection.SendLine("MVolume set to " + value.ToString() + "%");
         }
     }
 }
