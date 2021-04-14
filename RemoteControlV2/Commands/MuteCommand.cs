@@ -11,19 +11,19 @@ namespace RemoteControlV2.Commands
     {
         public string Name => "mute";
 
-        public bool Enabled { get; set; }
+        public bool Enabled { get; set; } = true;
 
         public void Execute(string arguments)
         {
             Program.Logger.Log(Logging.LogType.Commands, Logging.LogSeverity.Info, "Command received!");
-            Program.Connection.SendText("Command Received!");
+            Program.Connection.SendText("Command Received!\n");
             var state = CommandParser.BooleanParser(arguments);
             if (!state.HasValue)
             {
                 throw new ArgumentException();
             }
             Program.Logger.Log(Logging.LogType.Commands, Logging.LogSeverity.Info, "Mute set to " + state.ToString());
-            Program.Connection.SendText("Mute set to " + state.ToString());
+            Program.Connection.SendText("Mute set to " + state.ToString() + "\n");
         }
     }
 }

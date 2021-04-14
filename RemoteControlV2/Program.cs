@@ -112,18 +112,27 @@ namespace RemoteControlV2
             Logger.Log(LogType.Commands, LogSeverity.Debug, e.Command);
             try
             {
-                string name = e.Command.Remove(e.Command.IndexOf(' ')).Replace(" ", "");
+                string name = e.Command;
+                string args = "";
+                if (e.Command.Contains(" "))
+                {
+                    name = e.Command.Remove(e.Command.IndexOf(' ')).Replace(" ", "");
+                    args = e.Command.Substring(e.Command.IndexOf(' ') + 1);
+                }
+
                 foreach (ICommand c in Commands)
                 {
                     if (c.Name.Equals(name))
                     {
-                        Manager.OnCommand(c, e.Command.Substring(e.Command.IndexOf(' ')));
+                        Manager.OnCommand(c, args.Replace("\n", "").Replace("\r", "").Replace("\t", ""));
                     }
                 }
             }
             catch(Exception ex)
             {
-                Logger.Log(LogType.Commands, LogSeverity.Error, ex.Message);
+                Logger.Log(LogType.Commands, LogSeverity.Debug, $"Exception of type {ex.GetType()}: {ex.Message}");
+                Logger.Log(LogType.Commands, LogSeverity.Trace, ex.StackTrace);
+                Logger.Log(LogType.Commands, LogSeverity.Error, "Error while parsing command.");
             }
         }
 

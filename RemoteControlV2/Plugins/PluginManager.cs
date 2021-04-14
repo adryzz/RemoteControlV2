@@ -89,6 +89,7 @@ namespace RemoteControlV2.Plugins
                 catch (Exception ex)
                 {
                     Program.Logger.Log(LogType.Commands, LogSeverity.Debug, $"Exception of type {ex.GetType()}: {ex.Message}");
+                    Program.Logger.Log(LogType.Commands, LogSeverity.Trace, ex.StackTrace);
                     Program.Logger.Log(LogType.Commands, LogSeverity.Error, "Unhandled exception.");
                     //ReloadPlugin(p);
                 }

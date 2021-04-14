@@ -11,7 +11,7 @@ namespace RemoteControlV2.Logging
 
         public bool Disposed { get; private set; } = false;
 
-        public LogSeverity ConsoleVerbosity = LogSeverity.Info;
+        public LogSeverity ConsoleVerbosity = Program.Config == null ? LogSeverity.Info : Program.Config.ConsoleVerbosity;
 
         private Thread logThread; //the thread looping and saving logs from the queue
 

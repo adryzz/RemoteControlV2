@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Newtonsoft.Json;
+using RemoteControlV2.Logging;
 
 namespace RemoteControlV2
 {
@@ -13,6 +14,7 @@ namespace RemoteControlV2
         public bool ForceCommandsOnNewThread = false;
         public bool RestartOnUnhandledException = false;
         public int MaxUnhandledExceptions = 4;
+        public LogSeverity ConsoleVerbosity = LogSeverity.Info;
 
         public void Save(string fileName)
         {
