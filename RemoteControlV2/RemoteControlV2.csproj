@@ -61,6 +61,8 @@
   <ItemGroup>
     <Compile Include="CommandParser.cs" />
     <Compile Include="Commands\BSoDCommand.cs" />
+    <Compile Include="Commands\VersionCommand.cs" />
+    <Compile Include="Commands\ClipboardCommand.cs" />
     <Compile Include="Commands\SendKeysCommand.cs" />
     <Compile Include="Commands\RotateScreenCommand.cs" />
     <Compile Include="Commands\TTSCommand.cs" />
