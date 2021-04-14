@@ -105,6 +105,7 @@ namespace RemoteControlV2
         {
             Commands.Add(new SetCommand());
             Commands.Add(new ReloadCommand());
+            Commands.Add(new LogReadCommand());
             Commands.Add(new VolumeCommand());
             Commands.Add(new MuteCommand());
         }

@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Threading;
 using System.IO;
+using System.Collections.Generic;
 
 namespace RemoteControlV2.Logging
 {
@@ -16,6 +17,8 @@ namespace RemoteControlV2.Logging
         private Thread logThread; //the thread looping and saving logs from the queue
 
         private ConcurrentQueue<LogMessage> logQueue; //the thread-safe queue
+
+        public List<LogMessage> Logs = new List<LogMessage>();
 
         private bool logging = true; //set to false to stop logging
 
@@ -107,6 +110,7 @@ namespace RemoteControlV2.Logging
                     }
                     ConsoleLog(message);
                     DiskLog(message);
+                    Logs.Add(message);
                 }
                 Thread.Sleep(100);
             }
