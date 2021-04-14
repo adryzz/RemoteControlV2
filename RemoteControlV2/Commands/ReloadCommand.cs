@@ -11,7 +11,7 @@ namespace RemoteControlV2.Commands
     {
         public string Name => "reload";
 
-        public string Syntax => "Usage: reload";
+        public string Syntax => "Usage: 'reload'";
 
         public bool Enabled { get; set; } = true;
 

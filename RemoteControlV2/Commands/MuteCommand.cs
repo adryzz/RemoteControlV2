@@ -11,7 +11,7 @@ namespace RemoteControlV2.Commands
     {
         public string Name => "mute";
 
-        public string Syntax => "Usage: mute <state>";
+        public string Syntax => "Usage: 'mute <state>'";
 
         public bool Enabled { get; set; } = true;
 

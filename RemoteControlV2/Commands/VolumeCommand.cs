@@ -11,7 +11,7 @@ namespace RemoteControlV2.Commands
     {
         public string Name => "volume";
 
-        public string Syntax => "Usage: volume <percentage>";
+        public string Syntax => "Usage: 'volume <percentage>'";
 
         public bool Enabled { get; set; } = true;
 
