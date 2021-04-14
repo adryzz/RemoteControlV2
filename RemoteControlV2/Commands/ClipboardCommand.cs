@@ -19,7 +19,12 @@ namespace RemoteControlV2.Commands
         public void Execute(string arguments)
         {
             string[] arr = arguments.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            switch(arr[0])
+            string s = arguments;
+            if (arr.Length > 2)
+            {
+                s = arr[0];
+            }
+            switch(s)
             {
                 case "get":
                     {

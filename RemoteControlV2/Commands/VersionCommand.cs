@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-
 namespace RemoteControlV2.Commands
 {
     class VersionCommand : ICommand
@@ -14,11 +12,11 @@ namespace RemoteControlV2.Commands
 
         public string Syntax => "Usage: 'version'";
 
-        public bool Enabled { get; set; }
+        public bool Enabled { get; set; } = true;
 
         public void Execute(string arguments)
         {
-            Program.Connection.SendLine(Application.ProductVersion);
+            Program.Connection.SendLine(Environment.Version.ToString());
         }
     }
 }
