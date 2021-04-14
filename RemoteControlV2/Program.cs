@@ -103,6 +103,7 @@ namespace RemoteControlV2
 
         private static void AddStandardCommands()
         {
+            Commands.Add(new SetCommand());
             Commands.Add(new VolumeCommand());
             Commands.Add(new MuteCommand());
         }

@@ -16,7 +16,7 @@ namespace RemoteControlV2.Commands
 
         public void Execute(string arguments)
         {
-            string[] arr = arguments.Split(' ');
+            string[] arr = arguments.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             switch(arr[0])
             {
                 case "ConsoleVerbosity":
@@ -27,7 +27,39 @@ namespace RemoteControlV2.Commands
                             throw new ArgumentException();
                         }
                         Program.Config.ConsoleVerbosity = (LogSeverity)value;
-                        Program.Connection.SendText("Set console verbosity to " + value);
+                        Program.Connection.SendLine("Set console verbosity to " + value);
+                        break;
+                    }
+                case "Port":
+                    {
+                        if (arr.Length < 2)
+                        {
+                            throw new ArgumentException();
+                        }
+                        Program.Config.Port = arr[1];
+                        Program.Connection.SendLine("Set port to " + arr[1]);
+                        break;
+                    }
+                case "BaudRate":
+                    {
+                        int? value = CommandParser.Int32Parser(arr[1]);
+                        if (!value.HasValue)
+                        {
+                            throw new ArgumentException();
+                        }
+                        Program.Config.BaudRate = value.Value;
+                        Program.Connection.SendLine("Set baud rate to " + value.Value + "bps");
+                        break;
+                    }
+                case "ShowIcon":
+                    {
+                        var value = CommandParser.BooleanParser(arr[1]);
+                        if (!value.HasValue)
+                        {
+                            throw new ArgumentException();
+                        }
+                        Program.Config.ShowIcon = value.Value;
+                        Program.Connection.SendLine("Set taskbar icon visibility to " + value.Value);
                         break;
                     }
             }

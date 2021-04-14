@@ -28,6 +28,8 @@ namespace RemoteControlV2.Connection
 
         public void SendText(string text) => Port.Write(text);
 
+        public void SendLine(string text) => Port.WriteLine(text);
+
         public void Dispose() => Port.Dispose();
     }
 }
