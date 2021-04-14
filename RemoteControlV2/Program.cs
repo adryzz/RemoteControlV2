@@ -116,19 +116,20 @@ namespace RemoteControlV2
             Logger.Log(LogType.Commands, LogSeverity.Debug, e.Command);
             try
             {
-                string name = e.Command;
+                string command = e.Command.Replace("\n", "").Replace("\r", "").Replace("\t", "");
+                string name = command;
                 string args = "";
-                if (e.Command.Contains(" "))
+                if (command.Contains(' '))
                 {
-                    name = e.Command.Remove(e.Command.IndexOf(' ')).Replace(" ", "");
-                    args = e.Command.Substring(e.Command.IndexOf(' ') + 1);
+                    name = command.Remove(command.IndexOf(' ')).Replace(" ", "");
+                    args = command.Substring(command.IndexOf(' ') + 1);
                 }
 
                 foreach (ICommand c in Commands)
                 {
                     if (c.Name.Equals(name))
                     {
-                        Manager.OnCommand(c, args.Replace("\n", "").Replace("\r", "").Replace("\t", ""));
+                        Manager.OnCommand(c, args);
                     }
                 }
             }

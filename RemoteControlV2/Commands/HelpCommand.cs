@@ -12,7 +12,7 @@ namespace RemoteControlV2.Commands
     {
         public string Name => "help";
 
-        public string Syntax => "help <command>";
+        public string Syntax => "Usage: help <command>";
 
         public bool Enabled { get; set; } = true;
 
