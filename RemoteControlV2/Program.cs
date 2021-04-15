@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Ports;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using RemoteControlV2.Commands;
 using RemoteControlV2.Connection;
@@ -38,6 +38,8 @@ namespace RemoteControlV2
         [STAThread]
         static void Main()
         {
+            bool createdNew;
+            Mutex mutex = new Mutex(true, "RemoteControlV2", out createdNew);
             Logger = Logger.AllocateLogger();
             Logger.Initialize();
             Logger.Log(LogType.Runtime, LogSeverity.Info, "Application Started");
@@ -78,6 +80,7 @@ namespace RemoteControlV2
             {
                 Logger.Log(LogType.Runtime, LogSeverity.Debug, "Initializing serial connection method...");
                 var v1 = new SerialConnectionMethod(Config.Port, Config.BaudRate);
+                Logger.Log(LogType.Runtime, LogSeverity.Debug, "Initializing TCP connection method...");
                 var v2 = new TCPConnectionMethod(Config.NetPort);
                 Connection = new AggregateConnectionMethod(v1, v2);
             }
