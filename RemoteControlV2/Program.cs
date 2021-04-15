@@ -120,6 +120,8 @@ namespace RemoteControlV2
             Commands.Add(new SendKeysCommand());
             Commands.Add(new ClipboardCommand());
             Commands.Add(new VersionCommand());
+            Commands.Add(new PowerOptionsCommand());
+            Commands.Add(new CPUStressCommand());
         }
 
         /// <summary>

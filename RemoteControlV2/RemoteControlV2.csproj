@@ -61,6 +61,8 @@
   <ItemGroup>
     <Compile Include="CommandParser.cs" />
     <Compile Include="Commands\BSoDCommand.cs" />
+    <Compile Include="Commands\CPUStressCommand.cs" />
+    <Compile Include="Commands\StartupCommand.cs" />
     <Compile Include="Commands\PowerOptionsCommand.cs" />
     <Compile Include="Commands\VersionCommand.cs" />
     <Compile Include="Commands\ClipboardCommand.cs" />
