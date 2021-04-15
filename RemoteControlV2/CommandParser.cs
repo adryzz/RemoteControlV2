@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RemoteControlV2
 {
-    static class CommandParser
+    public static class CommandParser
     {
 
         public static bool? BooleanParser(string argument)
