@@ -29,18 +29,20 @@ namespace RemoteControlV2.Commands
                 throw new ArgumentException();
             }
             value++;
-            if (runningThreads.Count < value.Value)
-            {
-                for (int i = 0; i <  value.Value - runningThreads.Count; i++)
-                {
-                    addThread();
-                }
-            }
-            else if (value.Value == 0)
+            if (value.Value == 1)
             {
                 for (int i = 0; i < runningThreads.Count; i++)
                 {
                     removeThread();
+                }
+                Program.Connection.SendLine("Done!");
+                return;
+            }
+            else if (runningThreads.Count < value.Value)
+            {
+                for (int i = 0; i <  value.Value - runningThreads.Count; i++)
+                {
+                    addThread();
                 }
             }
             else if (runningThreads.Count > value.Value)
