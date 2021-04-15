@@ -13,7 +13,7 @@ using RemoteControlV2.Properties;
 
 namespace RemoteControlV2
 {
-    static class Program
+    public static class Program
     {
         public static Logger Logger;
         //***** PROGRAM *****//
@@ -261,6 +261,7 @@ namespace RemoteControlV2
                     try
                     {
                         p.Instance.Initialize();
+                        Commands.AddRange(p.Instance.Commands);
                     }
                     catch (Exception ex)
                     {
