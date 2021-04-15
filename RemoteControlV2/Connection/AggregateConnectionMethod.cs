@@ -23,8 +23,8 @@ namespace RemoteControlV2.Connection
         {
             method1.Initialize();
             method2.Initialize();
-            method1.OnCommandReceived += OnCommandReceived;
-            method2.OnCommandReceived += OnCommandReceived;
+            method1.OnCommandReceived += (s, e) => OnCommandReceived?.Invoke(s, e);
+            method2.OnCommandReceived += (s, e) => OnCommandReceived?.Invoke(s, e);
         }
 
         public void SendLine(string text)

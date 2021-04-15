@@ -78,6 +78,9 @@
     <Compile Include="Commands\MuteCommand.cs" />
     <Compile Include="Commands\VolumeCommand.cs" />
     <Compile Include="Connection\AggregateConnectionMethod.cs" />
+    <Compile Include="Connection\TCP\Client.cs" />
+    <Compile Include="Connection\TCP\Server.cs" />
+    <Compile Include="Connection\TCPConnectionMethod.cs" />
     <Compile Include="Connection\CommandEventArgs.cs" />
     <Compile Include="Connection\SerialConnectionMethod.cs" />
     <Compile Include="Connection\IConnectionMethod.cs" />

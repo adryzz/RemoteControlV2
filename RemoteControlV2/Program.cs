@@ -73,7 +73,21 @@ namespace RemoteControlV2
                 }
             }
             AddStandardCommands();
-            Connection = new SerialConnectionMethod(Config.Port, Config.BaudRate);
+
+            try
+            {
+                Logger.Log(LogType.Runtime, LogSeverity.Debug, "Initializing serial connection method...");
+                var v1 = new SerialConnectionMethod(Config.Port, Config.BaudRate);
+                var v2 = new TCPConnectionMethod(Config.NetPort);
+                Connection = new AggregateConnectionMethod(v1, v2);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogType.Runtime, LogSeverity.Debug, $"Exception of type {ex.GetType()}: {ex.Message}");
+                Logger.Log(LogType.Runtime, LogSeverity.Trace, ex.StackTrace);
+                Logger.Log(LogType.Runtime, LogSeverity.Fatal, "Could not initialize connection method.");
+                Exit(-1);
+            }
 
             Manager.Plugins = EnumeratePlugins();
             Manager.LoadAllPlugins();

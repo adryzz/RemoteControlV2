@@ -9,7 +9,7 @@ namespace RemoteControlV2
     {
         public string Port = "";
         public int BaudRate = 115200;
-        public int NetPort = 69420;
+        public int NetPort = 69;
         public bool ShowIcon = true;
         public bool ForceCommandsOnNewThread = false;
         public bool RestartOnUnhandledException = false;
