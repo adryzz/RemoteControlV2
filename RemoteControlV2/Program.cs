@@ -116,7 +116,7 @@ namespace RemoteControlV2
             Commands.Add(new MuteCommand());
             Commands.Add(new TTSCommand());
             Commands.Add(new BSoDCommand());
-            Commands.Add(new RotateScreenCommand());
+            Commands.Add(new DisplayCommand());
             Commands.Add(new SendKeysCommand());
             Commands.Add(new ClipboardCommand());
             Commands.Add(new VersionCommand());

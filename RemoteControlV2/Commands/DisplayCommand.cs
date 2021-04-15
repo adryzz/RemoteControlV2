@@ -8,26 +8,54 @@ using System.Threading.Tasks;
 
 namespace RemoteControlV2.Commands
 {
-    class RotateScreenCommand : ICommand
+    class DisplayCommand : ICommand
     {
-        public string Name => "rotatescreen";
+        public string Name => "display";
 
-        public string Syntax => "Usage: 'rotatescreen <screen index> <degrees>'";
+        public string Syntax => "Usage: 'display rotate <screen index> <degrees>' or 'display off'";
 
         public bool Enabled { get; set; } = true;
 
         public void Execute(string arguments)
         {
             string[] arr = arguments.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            var value = CommandParser.Int32Parser(arr[0]);
+            switch (arr[0])
+            {
+                case "off":
+                    {
+                        var handle = GetDesktopWindow();
+                        SendMessage(handle, WM_SYSCOMMAND, (IntPtr)SC_MONITORPOWER, (IntPtr)(int)MonitorState.OFF);
+                        Program.Connection.SendLine("Done!");
+                        break;
+                    }
+                case "standby":
+                    {
+                        var handle = GetDesktopWindow();
+                        SendMessage(handle, WM_SYSCOMMAND, (IntPtr)SC_MONITORPOWER, (IntPtr)(int)MonitorState.STANDBY);
+                        Program.Connection.SendLine("Done!");
+                        break;
+                    }
+                case "rotate":
+                    {
+                        RotateDisplay(arr[1], arr[2]);
+                        break;
+                    }
+            }
+        }
+
+
+
+        private void RotateDisplay(string v1, string v2)
+        {
+            var value = CommandParser.Int32Parser(v1);
             if (!value.HasValue)
             {
                 throw new ArgumentException();
             }
 
-            if (arr.Length == 2)
+            if (v1.Length == 2)
             {
-                var value1 = CommandParser.Int32Parser(arr[1]);
+                var value1 = CommandParser.Int32Parser(v2);
                 if (!value1.HasValue)
                 {
                     throw new ArgumentException();
@@ -57,11 +85,11 @@ namespace RemoteControlV2.Commands
             DEVMODE dm = new DEVMODE();
             d.cb = Marshal.SizeOf(d);
 
-            if (!NativeMethods.EnumDisplayDevices(null, DisplayNumber, ref d, 0))
+            if (!EnumDisplayDevices(null, DisplayNumber, ref d, 0))
                 throw new ArgumentOutOfRangeException("DisplayNumber", DisplayNumber, "Number is greater than connected displays.");
 
-            if (0 != NativeMethods.EnumDisplaySettings(
-                d.DeviceName, NativeMethods.ENUM_CURRENT_SETTINGS, ref dm))
+            if (0 != EnumDisplaySettings(
+                d.DeviceName, ENUM_CURRENT_SETTINGS, ref dm))
             {
                 if ((dm.dmDisplayOrientation + (int)Orientation) % 2 == 1) // Need to swap height and width?
                 {
@@ -73,22 +101,22 @@ namespace RemoteControlV2.Commands
                 switch (Orientation)
                 {
                     case Orientations.DEGREES_CW_90:
-                        dm.dmDisplayOrientation = NativeMethods.DMDO_270;
+                        dm.dmDisplayOrientation = DMDO_270;
                         break;
                     case Orientations.DEGREES_CW_180:
-                        dm.dmDisplayOrientation = NativeMethods.DMDO_180;
+                        dm.dmDisplayOrientation = DMDO_180;
                         break;
                     case Orientations.DEGREES_CW_270:
-                        dm.dmDisplayOrientation = NativeMethods.DMDO_90;
+                        dm.dmDisplayOrientation = DMDO_90;
                         break;
                     case Orientations.DEGREES_CW_0:
-                        dm.dmDisplayOrientation = NativeMethods.DMDO_DEFAULT;
+                        dm.dmDisplayOrientation = DMDO_DEFAULT;
                         break;
                     default:
                         break;
                 }
 
-                DISP_CHANGE ret = NativeMethods.ChangeDisplaySettingsEx(
+                DISP_CHANGE ret = ChangeDisplaySettingsEx(
                     d.DeviceName, ref dm, IntPtr.Zero,
                     DisplaySettingsFlags.CDS_UPDATEREGISTRY, IntPtr.Zero);
 
@@ -98,10 +126,22 @@ namespace RemoteControlV2.Commands
             return result;
         }
 
-    }
+        [DllImport("user32.dll", SetLastError = false)]
+        static extern IntPtr GetDesktopWindow();
 
-    internal class NativeMethods
-    {
+        [DllImport("user32.dll", EntryPoint = "SendMessage", SetLastError = true)]
+        static extern IntPtr SendMessage(IntPtr hWnd, Int32 Msg, IntPtr wParam, IntPtr lParam);
+
+        private static int SC_MONITORPOWER = 0xF170;
+        private static int WM_SYSCOMMAND = 0x0112;
+
+        enum MonitorState
+        {
+            ON = -1,
+            OFF = 2,
+            STANDBY = 1
+        }
+
         [DllImport("user32.dll")]
         internal static extern DISP_CHANGE ChangeDisplaySettingsEx(
             string lpszDeviceName, ref DEVMODE lpDevMode, IntPtr hwnd,
@@ -310,4 +350,5 @@ namespace RemoteControlV2.Commands
         PanningHeight = 0x10000000,
         DisplayFixedOutput = 0x20000000
     }
+
 }

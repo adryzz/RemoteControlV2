@@ -67,7 +67,7 @@
     <Compile Include="Commands\VersionCommand.cs" />
     <Compile Include="Commands\ClipboardCommand.cs" />
     <Compile Include="Commands\SendKeysCommand.cs" />
-    <Compile Include="Commands\RotateScreenCommand.cs" />
+    <Compile Include="Commands\DisplayCommand.cs" />
     <Compile Include="Commands\TTSCommand.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\CommandsListCommand.cs" />
