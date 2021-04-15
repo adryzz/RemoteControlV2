@@ -15,7 +15,7 @@ namespace RemoteControlV2.Commands
 
         public string Syntax => "Usage: 'startup set' or 'startup remove'";
 
-        public bool Enabled { get; set; }
+        public bool Enabled { get; set; } = true;
 
         public void Execute(string arguments)
         {
@@ -36,15 +36,18 @@ namespace RemoteControlV2.Commands
                         shortcut.TargetPath = path;
                         shortcut.WorkingDirectory = Environment.CurrentDirectory;
                         shortcut.Save();
+                        Program.Connection.SendLine("Done!");
                         break;
                     }
                 case "remove":
                     {
                         string lnk = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Microsoft\Windows\Start Menu\Programs\Startup\RCv2.lnk");
                         System.IO.File.Delete(lnk);
+                        Program.Connection.SendLine("Done!");
                         break;
                     }
             }
+
         }
     }
 }

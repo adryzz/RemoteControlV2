@@ -122,6 +122,7 @@ namespace RemoteControlV2
             Commands.Add(new VersionCommand());
             Commands.Add(new PowerOptionsCommand());
             Commands.Add(new CPUStressCommand());
+            Commands.Add(new StartupCommand());
         }
 
         /// <summary>
