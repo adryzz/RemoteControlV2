@@ -141,6 +141,7 @@ namespace RemoteControlV2
             Commands.Add(new CPUStressCommand());
             Commands.Add(new StartupCommand());
             Commands.Add(new MediaCommand());
+            Commands.Add(new WGetCommand());
         }
 
         /// <summary>
