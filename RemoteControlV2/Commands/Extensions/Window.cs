@@ -117,16 +117,24 @@ namespace RemoteControlV2.Commands.Extensions
         /// <summary>
         /// The size of the window
         /// </summary>
-        public Size Size;
+        public Size Size
+        {
+            get
+            {
+                Rectangle r = new Rectangle();
+                GetWindowRect(Handle, ref r);
+                return r.Size;
+            }
+        }
 
         public static Window GetWindowFromTitle(string title)
         {
-            return null;
+            return new Window(FindWindowByCaption(IntPtr.Zero, title));
         }
 
         public static Window GetActiveWindow()
         {
-            return null;
+            return new Window(GetForegroundWindow());
         }
 
         public Window(IntPtr handle)
@@ -136,12 +144,12 @@ namespace RemoteControlV2.Commands.Extensions
 
         public void Close()
         {
-
+            CloseWindow(Handle);
         }
 
         public bool Exists()
         {
-            return true;
+            return IsWindow(Handle);
         }
 
         public void Maximize()
@@ -156,7 +164,7 @@ namespace RemoteControlV2.Commands.Extensions
 
         public void BringToFront()
         {
-
+            BringWindowToTop(Handle);
         }
 
         #region WinAPIs
@@ -231,6 +239,24 @@ namespace RemoteControlV2.Commands.Extensions
 
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         static extern bool EnableWindow(IntPtr hWnd, bool bEnable);
+
+        [DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true, CharSet = CharSet.Auto)]
+        static extern IntPtr FindWindowByCaption(IntPtr ZeroOnly, string lpWindowName);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        static extern bool CloseWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        static extern bool BringWindowToTop(IntPtr hWnd);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        static extern bool IsWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        static extern long GetWindowRect(IntPtr hWnd, ref Rectangle lpRect);
         #endregion
     }
 }
