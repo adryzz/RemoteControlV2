@@ -214,7 +214,7 @@ namespace RemoteControlV2.Commands.Extensions
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         static extern bool IsWindowVisible(IntPtr hWnd);
 
-        public enum ShowWindowOptions
+        enum ShowWindowOptions
         {
             FORCEMINIMIZE = 11,
             HIDE = 0,
