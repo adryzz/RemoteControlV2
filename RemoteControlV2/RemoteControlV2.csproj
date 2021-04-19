@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="CommandParser.cs" />
     <Compile Include="Commands\BSoDCommand.cs" />
+    <Compile Include="Commands\Extensions\Display.cs" />
     <Compile Include="Commands\WindowCommand.cs" />
     <Compile Include="Commands\Extensions\ProcessExtensions.cs" />
     <Compile Include="Commands\ProcessCommand.cs" />
