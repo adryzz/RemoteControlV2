@@ -67,7 +67,7 @@ namespace RemoteControlV2.Commands
                             throw new ArgumentException();
                         }
                         Process p = Process.GetProcessById(pid.Value);
-                        if (p != null && p.HasExited)
+                        if (p != null && !p.HasExited)
                         {
                             p.Kill();
                             Program.Connection.SendLine($"Done!");
@@ -86,7 +86,7 @@ namespace RemoteControlV2.Commands
                             throw new ArgumentException();
                         }
                         Process p = Process.GetProcessById(pid.Value);
-                        if (p != null && p.HasExited)
+                        if (p != null && !p.HasExited)
                         {
                             p.Suspend();
                             Program.Connection.SendLine($"Done!");
@@ -105,7 +105,7 @@ namespace RemoteControlV2.Commands
                             throw new ArgumentException();
                         }
                         Process p = Process.GetProcessById(pid.Value);
-                        if (p != null && p.HasExited)
+                        if (p != null && !p.HasExited)
                         {
                             p.Resume();
                             Program.Connection.SendLine($"Done!");
