@@ -143,6 +143,7 @@ namespace RemoteControlV2
             Commands.Add(new MediaCommand());
             Commands.Add(new WGetCommand());
             Commands.Add(new ProcessCommand());
+            Commands.Add(new WindowCommand());
         }
 
         /// <summary>

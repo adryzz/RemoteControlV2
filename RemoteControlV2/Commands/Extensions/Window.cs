@@ -184,7 +184,7 @@ namespace RemoteControlV2.Commands.Extensions
         }
 
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern bool SetWindowText(IntPtr hwnd, String lpString);
+        static extern bool SetWindowText(IntPtr hwnd, String lpString);
 
         [DllImport("user32.dll")]
         static extern bool SetLayeredWindowAttributes(IntPtr hwnd, uint crKey, byte bAlpha, uint dwFlags);
