@@ -327,7 +327,6 @@ namespace RemoteControlV2.Connection.TCP
                     CloseSocket(clientSocket);
                     serverSocket.BeginAccept(new AsyncCallback(handleIncomingConnection), serverSocket);
                 }
-
                 else if (data[0] < 0xF0)
                 {
                     string receivedData = client.GetReceivedData();
@@ -361,7 +360,6 @@ namespace RemoteControlV2.Connection.TCP
                     client.RemoveLastCharacterReceived();
                     SendBytesToSocket(clientSocket, new byte[] { 0x08, 0x20, 0x08 });
                 }
-
                 else
                     clientSocket.BeginReceive(data, 0, dataSize, SocketFlags.None, new AsyncCallback(receiveData), clientSocket);
             }

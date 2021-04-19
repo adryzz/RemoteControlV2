@@ -30,7 +30,6 @@ namespace RemoteControlV2.Commands
                     Program.Connection.SendLine($"[{m.Severity.ToString().ToUpper()}] | [{m.Type.ToString().ToUpper()}] {m.LogTime} | {m.Message.Replace("\n", "").Replace("\r", "")}");
                 }
             }
-
         }
     }
 }

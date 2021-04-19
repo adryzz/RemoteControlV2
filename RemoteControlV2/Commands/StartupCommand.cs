@@ -47,7 +47,6 @@ namespace RemoteControlV2.Commands
                         break;
                     }
             }
-
         }
     }
 }
