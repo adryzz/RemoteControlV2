@@ -13,7 +13,6 @@ namespace RemoteControlV2.Connection.TCP
         /// Telnet's port.
         /// </summary>
         private int port = 23;
-
         /// <summary>
         /// Server's main socket.
         /// </summary>
@@ -188,7 +187,6 @@ namespace RemoteControlV2.Connection.TCP
                         c.ResetReceivedData();
                     }
                 }
-
                 catch
                 {
                     clients.Remove(s);
@@ -286,13 +284,11 @@ namespace RemoteControlV2.Connection.TCP
 
                     serverSocket.BeginAccept(new AsyncCallback(handleIncomingConnection), serverSocket);
                 }
-
                 else
                 {
                     ConnectionBlocked((IPEndPoint)oldSocket.RemoteEndPoint);
                 }
             }
-
             catch { }
         }
 
@@ -309,7 +305,6 @@ namespace RemoteControlV2.Connection.TCP
 
                 clientSocket.BeginReceive(data, 0, dataSize, SocketFlags.None, new AsyncCallback(receiveData), clientSocket);
             }
-
             catch { }
         }
 
@@ -345,50 +340,49 @@ namespace RemoteControlV2.Connection.TCP
                         MessageReceived(client, client.GetReceivedData());
                         client.ResetReceivedData();
                     }
-
                     else
                     {
-                        // 0x08 => backspace character
-                        if (data[0] == 0x08)
-                        {
-                            if (receivedData.Length > 0)
-                            {
-                                client.RemoveLastCharacterReceived();
-                                SendBytesToSocket(clientSocket, new byte[] { 0x08, 0x20, 0x08 });
-                            }
-
-                            else
-                                clientSocket.BeginReceive(data, 0, dataSize, SocketFlags.None, new AsyncCallback(receiveData), clientSocket);
-                        }
-
-                        // 0x7F => delete character
-                        else if (data[0] == 0x7F)
-                            clientSocket.BeginReceive(data, 0, dataSize, SocketFlags.None, new AsyncCallback(receiveData), clientSocket);
-
-                        else
-                        {
-                            client.AppendReceivedData(Encoding.ASCII.GetString(data, 0, bytesReceived));
-
-                            // Echo back the received character
-                            // if client is not writing any password
-                            if (client.GetCurrentStatus() != EClientStatus.Authenticating)
-                                SendBytesToSocket(clientSocket, new byte[] { data[0] });
-
-                            // Echo back asterisks if client is
-                            // writing a password
-                            else
-                                SendMessageToSocket(clientSocket, "*");
-
-                            clientSocket.BeginReceive(data, 0, dataSize, SocketFlags.None, new AsyncCallback(receiveData), clientSocket);
-                        }
+                        read(client, clientSocket, bytesReceived, receivedData);
                     }
+                }
+                else
+                    clientSocket.BeginReceive(data, 0, dataSize, SocketFlags.None, new AsyncCallback(receiveData), clientSocket);
+            }
+            catch { }
+        }
+
+        private void read(Client client, Socket clientSocket, int bytesReceived, string receivedData)
+        {
+            // 0x08 => backspace character
+            if (data[0] == 0x08)
+            {
+                if (receivedData.Length > 0)
+                {
+                    client.RemoveLastCharacterReceived();
+                    SendBytesToSocket(clientSocket, new byte[] { 0x08, 0x20, 0x08 });
                 }
 
                 else
                     clientSocket.BeginReceive(data, 0, dataSize, SocketFlags.None, new AsyncCallback(receiveData), clientSocket);
             }
+            // 0x7F => delete character
+            else if (data[0] == 0x7F)
+                clientSocket.BeginReceive(data, 0, dataSize, SocketFlags.None, new AsyncCallback(receiveData), clientSocket);
+            else
+            {
+                client.AppendReceivedData(Encoding.ASCII.GetString(data, 0, bytesReceived));
 
-            catch { }
+                // Echo back the received character
+                // if client is not writing any password
+                if (client.GetCurrentStatus() != EClientStatus.Authenticating)
+                    SendBytesToSocket(clientSocket, new byte[] { data[0] });
+
+                // Echo back asterisks if client is
+                // writing a password
+                else
+                    SendMessageToSocket(clientSocket, "*");
+                clientSocket.BeginReceive(data, 0, dataSize, SocketFlags.None, new AsyncCallback(receiveData), clientSocket);
+            }
         }
     }
 }

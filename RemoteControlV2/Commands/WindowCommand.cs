@@ -17,7 +17,7 @@ namespace RemoteControlV2.Commands
 
         public void Execute(string arguments)
         {
-            
+            return;
         }
     }
 }
