@@ -36,84 +36,22 @@ namespace RemoteControlV2.Commands
                     }
                 case "start":
                     {
-                        Process p = null;
-                        if (arr.Length == 1)
-                        {
-                            throw new ArgumentException();
-                        }
-                        else if (arr.Length == 2)
-                        {
-                             p = Process.Start(arr[1]);
-                        }
-                        else
-                        {
-                            p = Process.Start(arr[1], string.Join(" ", arr.Skip(2)));
-                        }
-                        if (p != null) 
-                        {
-                            Program.Connection.SendLine($"The process {p.Id} has been started.");
-                        }
-                        else
-                        {
-                            Program.Connection.SendLine($"An error has occurred.");
-                        }
+                        StartProcess(arr);
                         break;
                     }
                 case "kill":
                     {
-                        var pid = CommandParser.Int32Parser(arr[1]);
-                        if (!pid.HasValue)
-                        {
-                            throw new ArgumentException();
-                        }
-                        Process p = Process.GetProcessById(pid.Value);
-                        if (p != null && !p.HasExited)
-                        {
-                            p.Kill();
-                            Program.Connection.SendLine($"Done!");
-                        }
-                        else
-                        {
-                            Program.Connection.SendLine($"The process does not exist.");
-                        }
+                        KillProcess(arr);
                         break;
                     }
                 case "suspend":
                     {
-                        var pid = CommandParser.Int32Parser(arr[1]);
-                        if (!pid.HasValue)
-                        {
-                            throw new ArgumentException();
-                        }
-                        Process p = Process.GetProcessById(pid.Value);
-                        if (p != null && !p.HasExited)
-                        {
-                            p.Suspend();
-                            Program.Connection.SendLine($"Done!");
-                        }
-                        else
-                        {
-                            Program.Connection.SendLine($"The process does not exist.");
-                        }
+                        SuspendProcess(arr);
                         break;
                     }
                 case "resume":
                     {
-                        var pid = CommandParser.Int32Parser(arr[1]);
-                        if (!pid.HasValue)
-                        {
-                            throw new ArgumentException();
-                        }
-                        Process p = Process.GetProcessById(pid.Value);
-                        if (p != null && !p.HasExited)
-                        {
-                            p.Resume();
-                            Program.Connection.SendLine($"Done!");
-                        }
-                        else
-                        {
-                            Program.Connection.SendLine($"The process does not exist.");
-                        }
+                        ResumeProcess(arr);
                         break;
                     }
             }
@@ -131,7 +69,7 @@ namespace RemoteControlV2.Commands
                 processes.AddRange(Process.GetProcessesByName(query));
             }
             StringBuilder builder = new StringBuilder();
-            foreach(Process p in processes)
+            foreach (Process p in processes)
             {
                 if (string.IsNullOrWhiteSpace(p.MainWindowTitle))
                 {
@@ -143,6 +81,88 @@ namespace RemoteControlV2.Commands
                 }
             }
             Program.Connection.SendText(builder.ToString());
+        }
+
+        private void StartProcess(string[] arr)
+        {
+            Process p = null;
+            if (arr.Length == 1)
+            {
+                throw new ArgumentException();
+            }
+            else if (arr.Length == 2)
+            {
+                p = Process.Start(arr[1]);
+            }
+            else
+            {
+                p = Process.Start(arr[1], string.Join(" ", arr.Skip(2)));
+            }
+            if (p != null)
+            {
+                Program.Connection.SendLine($"The process {p.Id} has been started.");
+            }
+            else
+            {
+                Program.Connection.SendLine($"An error has occurred.");
+            }
+        }
+
+        private void KillProcess(string[] arr)
+        {
+            var pid = CommandParser.Int32Parser(arr[1]);
+            if (!pid.HasValue)
+            {
+                throw new ArgumentException();
+            }
+            Process p = Process.GetProcessById(pid.Value);
+            if (p != null && !p.HasExited)
+            {
+                p.Kill();
+                Program.Connection.SendLine($"Done!");
+            }
+            else
+            {
+                Program.Connection.SendLine($"The process does not exist.");
+            }
+        }
+
+        private void SuspendProcess(string[] arr)
+        {
+            var pid = CommandParser.Int32Parser(arr[1]);
+            if (!pid.HasValue)
+            {
+                throw new ArgumentException();
+            }
+            Process p = Process.GetProcessById(pid.Value);
+            if (p != null && !p.HasExited)
+            {
+                p.Suspend();
+                Program.Connection.SendLine($"Done!");
+            }
+            else
+            {
+                Program.Connection.SendLine($"The process does not exist.");
+            }
+        }
+
+        private void ResumeProcess(string[] arr)
+        {
+            var pid = CommandParser.Int32Parser(arr[1]);
+            if (!pid.HasValue)
+            {
+                throw new ArgumentException();
+            }
+            Process p = Process.GetProcessById(pid.Value);
+            if (p != null && !p.HasExited)
+            {
+                p.Resume();
+                Program.Connection.SendLine($"Done!");
+            }
+            else
+            {
+                Program.Connection.SendLine($"The process does not exist.");
+            }
         }
     }
 }

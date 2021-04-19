@@ -46,7 +46,6 @@ namespace RemoteControlV2.Commands.Extensions
         /// <returns></returns>
         public static WindowsIdentity GetProcessOwner(this Process p)
         {
-
             string query = "Select * From Win32_Process Where ProcessID = " + p.Id;
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
             ManagementObjectCollection processList = searcher.Get();
@@ -261,7 +260,6 @@ namespace RemoteControlV2.Commands.Extensions
         {
             try
             {
-
                 if (p.ProcessName == string.Empty)
                     return;
 
