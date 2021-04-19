@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 namespace RemoteControlV2.Commands
@@ -16,7 +17,7 @@ namespace RemoteControlV2.Commands
 
         public void Execute(string arguments)
         {
-            Program.Connection.SendLine(Environment.Version.ToString());
+            Program.Connection.SendLine(Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
     }
 }
