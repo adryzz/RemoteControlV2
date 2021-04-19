@@ -8,7 +8,6 @@ namespace RemoteControlV2
 {
     public static class CommandParser
     {
-
         public static bool? BooleanParser(string argument)
         {
             switch (argument)
